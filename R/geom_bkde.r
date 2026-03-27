@@ -61,7 +61,7 @@ geom_bkde <- function(mapping = NULL, data = NULL, stat = "bkde",
 #' @keywords internal
 #' @export
 GeomBkde <- ggproto("GeomBkde", GeomArea,
-  default_aes = aes(colour = NA, fill = "gray20", size = 0.5,
+  default_aes = aes(colour = NA, fill = "gray20", linewidth = 0.5,
                     linetype = 1, alpha = NA)
 )
 
@@ -139,7 +139,7 @@ StatBkde <- ggproto("StatBkde", Stat,
 
   required_aes = "x",
 
-  default_aes = aes(y = ..density.., colour = NA, fill = "gray20", size = 0.5,
+  default_aes = aes(y = after_stat(density), colour = NA, fill = "gray20", linewidth = 0.5,
                     linetype = 1, alpha = NA),
 
   compute_group = function(data, scales, kernel="normal", canonical=FALSE,

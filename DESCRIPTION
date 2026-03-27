@@ -30,21 +30,21 @@ URL: https://github.com/hrbrmstr/ggalt
 BugReports: https://github.com/hrbrmstr/ggalt/issues
 Encoding: UTF-8
 Depends:
-    R (>= 3.2.0),
-    ggplot2 (>= 2.2.1)
+    R (>= 3.5.0),
+    ggplot2 (>= 3.3.0)
 Suggests:
     testthat,
     gridExtra,
     knitr,
     rmarkdown,
     ggthemes,
-    reshape2
+    reshape2,
+    maps
 Imports:
     utils,
     graphics,
     datasets,
     grDevices,
-    plyr,
     dplyr,
     RColorBrewer,
     KernSmooth,
@@ -53,7 +53,6 @@ Imports:
     grid,
     gtable,
     ash,
-    maps,
     MASS,
     extrafont,
     tibble,

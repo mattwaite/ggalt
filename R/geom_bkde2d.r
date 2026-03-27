@@ -11,7 +11,7 @@
 #'
 #' m + geom_bkde2d(bandwidth=c(0.5, 4))
 #'
-#' m + stat_bkde2d(bandwidth=c(0.5, 4), aes(fill = ..level..), geom = "polygon")
+#' m + stat_bkde2d(bandwidth=c(0.5, 4), aes(fill = after_stat(level)), geom = "polygon")
 #'
 #' # If you map an aesthetic to a categorical variable, you will get a
 #' # set of contours for each value of that variable
@@ -23,11 +23,11 @@
 #'
 #' # If we turn contouring off, we can use use geoms like tiles:
 #' d + stat_bkde2d(bandwidth=c(0.5, 0.5), geom = "raster",
-#'                 aes(fill = ..density..), contour = FALSE)
+#'                 aes(fill = after_stat(density)), contour = FALSE)
 #'
 #' # Or points:
 #' d + stat_bkde2d(bandwidth=c(0.5, 0.5), geom = "point",
-#'                 aes(size = ..density..),  contour = FALSE)
+#'                 aes(size = after_stat(density)),  contour = FALSE)
 geom_bkde2d <- function(mapping = NULL, data = NULL, stat = "bkde2d",
                            position = "identity",  bandwidth=NULL, range.x=NULL,
                            lineend = "butt", contour=TRUE,
@@ -182,7 +182,8 @@ StatBkde2d <- ggproto("StatBkde2d", Stat,
     df$group <- data$group[1]
 
     if (contour) {
-      StatContour$compute_panel(df, scales)
+      z.range <- range(df$z, na.rm = TRUE, finite = TRUE)
+      StatContour$compute_group(df, scales, z.range = z.range)
     } else {
       names(df) <- c("x", "y", "density", "group")
       df$level <- 1

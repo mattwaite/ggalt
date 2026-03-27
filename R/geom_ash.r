@@ -101,7 +101,7 @@ StatAsh <- ggproto("StatAsh", Stat,
 
   required_aes = c("x"),
 
-  default_aes = aes(y = ..density.., colour = NA, fill = "gray20", size = 0.5,
+  default_aes = aes(y = after_stat(density), colour = NA, fill = "gray20", linewidth = 0.5,
                     linetype = 1, alpha = NA),
 
 
@@ -118,7 +118,7 @@ StatAsh <- ggproto("StatAsh", Stat,
     if (is.null(ab)) ab <- nicerange(data$x)
 
     bin_res <- ash::bin1(data$x, ab, nbin)
-    ash_msg <- capture.output(ash_res <- ash1(bin_res))
+    ash_msg <- capture.output(ash_res <- ash::ash1(bin_res))
 
     if (ash_res$ier == 1) message("Estimate nonzero outside interval ab.")
 

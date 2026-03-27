@@ -6,7 +6,7 @@
 #' plots are best viewed in an apsect ratio of very low vertical length.
 #'
 #' @md
-#' @section Aesthetics: `x`, `y`, `fill`. `fill` defaults to `..band..` which is
+#' @section Aesthetics: `x`, `y`, `fill`. `fill` defaults to `after_stat(band)` which is
 #'     the band number the current data fill area belongs in.
 #' @section Other parameters: `bandwidth`, to dictate the span of a band.
 #' @export
@@ -33,9 +33,9 @@ geom_horizon <-  function(mapping = NULL, data = NULL, show.legend = TRUE,
 #' @export
 GeomHorizon <- ggproto("GeomHorizon", GeomArea,
   required_aes = c("x", "y"),
-  default_aes = plyr::defaults(
-    aes(fill=NA, size = 0.15, linetype = 1, alpha = NA, colour = "gray20"),
-    ggplot2::GeomArea$default_aes
+  default_aes = modifyList(
+    ggplot2::GeomArea$default_aes,
+    aes(fill=NA, linewidth = 0.15, linetype = 1, alpha = NA, colour = "gray20")
   ),
   draw_key = ggplot2::draw_key_rect
 )
@@ -69,7 +69,7 @@ StatHorizon <- ggproto(
   "StatHorizon",
   Stat,
   required_aes = c("x", "y"),
-  default_aes = aes(fill=..band..),
+  default_aes = aes(fill=after_stat(band)),
   setup_params = function(data, params) {
 
     # calculating a default bandwidth
